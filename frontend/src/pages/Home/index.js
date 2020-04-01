@@ -1,129 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+import api from '../../services/api';
 
 import { ProductList } from './styles';
 
-export default function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
+  async componentDidMount() {
+    const response = await api.get('products');
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
+    this.setState({ products: response.data });
+  }
 
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
+  render() {
+    const { products } = this.setState;
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
+    return (
+      <ProductList>
+        {products.map((product) => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span> {product.price}</span>
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} color="#fff" /> 3
+              </div>
 
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-solar-boost-masculino/08/COL-7905-008/COL-7905-008_zoom2.jpg?ts=1576605177&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Adidas Boost</strong>
-        <span> R$ 450,00</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-    </ProductList>
-  );
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }
